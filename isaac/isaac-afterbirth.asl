@@ -27,7 +27,10 @@ start
 
 reset 
 {
-    return (old.timer == 0 && current.timer != 0 
+    //old.timer is 0 immediately during a reset, and also when you're on the main menu
+    //this "current.timer < 10" is to stop a reset from happening when you s+q.
+    // (unless you s+q during the first 1/3 second of the run, but why would you)
+    return (old.timer == 0 && current.timer != 0 && current.timer < 10
          && (!settings["character_run"] || timer.CurrentSplitIndex == 0));
 }
 
