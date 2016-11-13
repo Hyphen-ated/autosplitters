@@ -1,7 +1,6 @@
 //isaac autosplits by Hyphen-ated
 state("isaac-ng", "1.06.0109")
 {
-   //"pStats" is at 0x002EE09C, 0x
    int wins: 0x002EE09C, 0x64c;
    int checksum:  0x002EE09C, 0x6f0;   
    int character: 0x002EE09C, 0x7e78;
@@ -26,7 +25,7 @@ init
 
 update
 {
-    print("wins: " + current.wins + ", floor: " + current.floor + ", character: " + current.character + ", timer: " + current.timer + ", curse: " + current.curse); 
+    //print("wins: " + current.wins + ", floor: " + current.floor + ", character: " + current.character + ", timer: " + current.timer + ", curse: " + current.curse); 
 }
 
 start
