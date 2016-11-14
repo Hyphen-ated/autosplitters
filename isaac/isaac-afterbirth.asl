@@ -71,7 +71,8 @@ split
         {
             vars.timer_during_floor_change = -1;
             //if they're in blck_cndl mode, there is no xl even if the xl curse looks like it's on
-            if(current.curse == 2 && !settings["blck_cndl"]) {
+            //similarly, with grouped floors, there's no split to skip
+            if(current.curse == 2 && !settings["blck_cndl"] && !settings["grouped_floors"]) {
                 var model = new TimerModel { CurrentState = timer };
                 model.SkipSplit();
             }            
