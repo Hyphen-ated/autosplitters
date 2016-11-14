@@ -14,8 +14,10 @@ startup
 {
     settings.Add("character_run", true, "Multi-character run");
     settings.SetToolTip("character_run", "Disables auto-resetting when you're past the first split.");
-    settings.Add("floor_splits", false, "Split on every floor");
-    settings.Add("blck_cndl", false, "You're using blck_cndl mode (only relevant if splitting on floors)");
+    settings.Add("floor_splits", false, "Split on floors");
+    settings.Add("grouped_floors", false, "Combine basement, caves, depths, and womb into one split each", "floor_splits"); 
+    settings.Add("blck_cndl", false, "You're using blck_cndl mode", "floor_splits");
+    
 }
 
 init
@@ -57,7 +59,8 @@ split
                 
     if (settings["floor_splits"]) 
     {
-        if (current.floor > old.floor && current.floor > 1) {
+        if (current.floor > old.floor && current.floor > 1 && old.floor > 0
+        && (!settings["grouped_floors"] || (current.floor != 2 && current.floor != 4 && current.floor != 6 && current.floor != 8))) {
             //when using floor splits, if they just got into an xl floor, we are going to doublesplit
             vars.timer_during_floor_change = current.timer;       
             return true;
