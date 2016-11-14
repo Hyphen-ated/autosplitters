@@ -21,4 +21,4 @@ Issues:
 * If you're doing runs with the BLCK CNDL seed, and you want to split on floors, you need to
   check the box in the options to tell the timer about it, or else it will mishandle XL floors.
 
-This is version 7 of the splitter, for afterbirth 1.06.0109
+This is version 8 of the splitter, for afterbirth 1.06.0109
