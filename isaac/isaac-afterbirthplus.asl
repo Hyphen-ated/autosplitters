@@ -1,13 +1,13 @@
 //isaac autosplits by Hyphen-ated
-state("isaac-ng", "1.06.0193")
+state("isaac-ng", "1.06.0211")
 {
-    int wins: 0x00532ea4, 0x74c;
-    int character: 0x00532ea4, 0x7a24;
-    int winstreak: 0x00532ea4, 0x1f0;
+    int wins: 0x00534ea4, 0x74c;
+    int character: 0x00534ea4, 0x7a24;
+    int winstreak: 0x00534ea4, 0x1f0;
 
-    int timer: 0x00532e98, 0x00213ebc;
-    int floor: 0x00532e98, 0x0;
-    int curse: 0x00532e98, 0xC;
+    int timer: 0x00534e98, 0x00213ebc;
+    int floor: 0x00534e98, 0x0;
+    int curse: 0x00534e98, 0xC;
 }
 
 startup
