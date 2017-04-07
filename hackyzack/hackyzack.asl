@@ -17,12 +17,14 @@ init
 }
 
 update
-{
+{    
     if (old.level_complete_menu == 0 && current.level_complete_menu == 1) {
         current.level = old.level + 1;
     } else {
         current.level = old.level;
     }
+    if(timer.CurrentPhase == TimerPhase.NotRunning)
+        current.level = 1;
 }
 
 split
