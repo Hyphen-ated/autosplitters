@@ -2,18 +2,18 @@
 // Code by Hyphen-ated
 // Checkpoint code & pointer annotations by blcd/Zamiel
 
-state("isaac-ng", "1.06.J39")
+state("isaac-ng", "1.06.J75")
 {
-    // 0x004e6ff0 - GamePtr (which is the same thing as the Lua "game" pointer)
-    int wins:      0x004e6ff0, 0x754;
-    int character: 0x004e6ff0, 0x7a2C;
-    int winstreak: 0x004e6ff0, 0x1f8;
+    // 0x004f0fe0 - GamePtr (which is the same thing as the Lua "game" pointer)
+    int wins:      0x004f0fe0, 0x75c;
+    int character: 0x004f0fe0, 0x7a2C;
+    int winstreak: 0x004f0fe0, 0x1f0;
 
-    // 0x004e6fe0 - GlobalsPtr
-    int timer:   0x004e6fe0, 0x00213b0c;
-    int floor:   0x004e6fe0, 0x0;
-    int curse:   0x004e6fe0, 0xC;
-    int cpCount: 0x004e6fe0, 0x9b64, 0x0, 0x2758, 0x850; // "Checkpoint" count, for Racing+
+    // 0x004f0fd0 - GlobalsPtr
+    int timer:   0x004f0fd0, 0x00213b0c;
+    int floor:   0x004f0fd0, 0x0;
+    int curse:   0x004f0fd0, 0xC;
+    int cpCount: 0x004f0fd0, 0x9b64, 0x0, 0x2758, 0x850; // "Checkpoint" count, for Racing+
     // 0x9b64 - PlayerVectorPtr
     // 0x0    - Player1
     // 0x2758 - Player1 CollectibleNum Vector Ptr
