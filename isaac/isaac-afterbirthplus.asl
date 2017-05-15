@@ -13,11 +13,11 @@ state("isaac-ng", "1.06.J75")
     int timer:   0x004f0fd0, 0x00213b0c;
     int floor:   0x004f0fd0, 0x0;
     int curse:   0x004f0fd0, 0xC;
-    int cpCount: 0x004f0fd0, 0x9b64, 0x0, 0x2758, 0x850; // "Checkpoint" count, for Racing+
+    int cpCount: 0x004f0fd0, 0x9b64, 0x0, 0x2764, 0x864; // "Checkpoint" count, for Racing+
     // 0x9b64 - PlayerVectorPtr
     // 0x0    - Player1
-    // 0x2758 - Player1 CollectibleNum Vector Ptr
-    // 0x850  - Item 532 count
+    // 0x2764 - Player1 CollectibleNum Vector Ptr
+    // 0x864  - Item 537 count
 }
 
 startup
