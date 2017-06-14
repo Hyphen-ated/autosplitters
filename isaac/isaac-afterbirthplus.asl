@@ -13,11 +13,18 @@ state("isaac-ng", "1.06.J85")
     int timer:   0x004f3010, 0x00213b0c;
     int floor:   0x004f3010, 0x0;
     int curse:   0x004f3010, 0xC;
-    int cpCount: 0x004f3010, 0x9b64, 0x0, 0x2764, 0x864; // "Checkpoint" count, for Racing+
+    
+    // Checkpoint is a custom item planted at the end of a run in the Racing+ mod
+    int cpCount: 0x004f3010, 0x9b64, 0x0, 0x2764, 0x864; // "Checkpoint" (ID 537) count
+    
+    // Off Limits is a custom item used by the Racing+ mod to signal the AutoSplitter that the mod is sending the player back to the first character        
+    int olCount: 0x004f3010, 0x9b64, 0x0, 0x2764, 0x85C; // "Off Limits" (ID 535) count
+    
     // 0x9b64 - PlayerVectorPtr
     // 0x0    - Player1
     // 0x2764 - Player1 CollectibleNum Vector Ptr
     // 0x864  - Item 537 count
+    // 0x85C  - Item 535 count
 }
 
 startup
@@ -44,7 +51,7 @@ update
 
 start
 {
-    if(old.timer == 0 && current.timer != 0)
+    if (old.timer == 0 && current.timer != 0)
     {
         vars.timer_during_floor_change = 0;
         return true;
@@ -56,10 +63,15 @@ reset
     //old.timer is 0 immediately during a reset, and also when you're on the main menu
     //this "current.timer < 10" is to stop a reset from happening when you s+q.
     // (unless you s+q during the first 1/3 second of the run, but why would you)
-    if(old.timer == 0 && current.timer != 0 && current.timer < 10
-         && (!settings["character_run"] || timer.CurrentSplitIndex == 0))
+    if (old.timer == 0 && current.timer != 0 && current.timer < 10
+        && (!settings["character_run"] || timer.CurrentSplitIndex == 0))
     {
         vars.timer_during_floor_change = 0;
+        return true;
+    }
+
+    if (settings["racing_plus_custom_challenge"] && current.olCount == 1 && old.olCount != 1)
+    {
         return true;
     }
 }
@@ -81,7 +93,7 @@ split
             return true;
         }
 
-        if(vars.timer_during_floor_change != -1
+        if (vars.timer_during_floor_change != -1
         && current.timer > vars.timer_during_floor_change)
         {
             vars.timer_during_floor_change = -1;
