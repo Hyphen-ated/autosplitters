@@ -2,29 +2,30 @@
 // Code by Hyphen-ated
 // Checkpoint code & pointer annotations by blcd/Zamiel
 
-state("isaac-ng", "1.06.J85")
+state("isaac-ng", "1.06.J99")
 {
-    // 0x004f3020 - GamePtr (which is the same thing as the Lua "game" pointer)
-    int wins:      0x004f3020, 0x75c;
-    int character: 0x004f3020, 0x7a34;
-    int winstreak: 0x004f3020, 0x1f0;
+    // 0x004F8000 - GlobalsPtr
+    int wins:      0x004F8000, 0x760;
+    int character: 0x004F8000, 0x7a38;
+    int winstreak: 0x004F8000, 0x1f0;
 
-    // 0x004f3010 - GlobalsPtr
-    int timer:   0x004f3010, 0x00213b0c;
-    int floor:   0x004f3010, 0x0;
-    int curse:   0x004f3010, 0xC;
+    // 0x004F7FF4 - GamePtr (which is the same thing as the Lua "game" pointer)
+    int timer:   0x004F7FF4, 0x00213b0c;
+    int floor:   0x004F7FF4, 0x0;
+    int curse:   0x004F7FF4, 0xC;
     
     // Checkpoint is a custom item planted at the end of a run in the Racing+ mod
-    int cpCount: 0x004f3010, 0x9b64, 0x0, 0x2764, 0x864; // "Checkpoint" (ID 537) count
+    int cpCount: 0x004F7FF4, 0x9b64, 0x0, 0x2764, 0x874; // "Checkpoint" (ID 541) count
     
     // Off Limits is a custom item used by the Racing+ mod to signal the AutoSplitter that the mod is sending the player back to the first character        
-    int olCount: 0x004f3010, 0x9b64, 0x0, 0x2764, 0x85C; // "Off Limits" (ID 535) count
+    int olCount: 0x004F7FF4, 0x9b64, 0x0, 0x2764, 0x86C; // "Off Limits" (ID 539) count
     
+    // Equivalent Lua: Game():GetPlayer(0):GetCollectibleNum(541)
     // 0x9b64 - PlayerVectorPtr
     // 0x0    - Player1
     // 0x2764 - Player1 CollectibleNum Vector Ptr
-    // 0x864  - Item 537 count
-    // 0x85C  - Item 535 count
+    // 0x864  - Item 541 count
+    // 0x86C - Item 539 count
 }
 
 startup
@@ -33,9 +34,8 @@ startup
     settings.SetToolTip("character_run", "Disables auto-resetting when you're past the first split.");
     settings.Add("racing_plus_custom_challenge", false, "You're using the Racing+ custom challenge for multi-character runs", "character_run");
     settings.Add("floor_splits", false, "Split on floors");
-    settings.Add("grouped_floors", false, "Combine basement, caves, depths, and womb into one split each", "floor_splits");
-    settings.Add("blck_cndl", false, "You're using blck_cndl mode", "floor_splits");
-
+    settings.Add("grouped_floors", false, "Combine Basement, Caves, Depths, and Womb into one split each", "floor_splits");
+    settings.Add("blck_cndl", false, "You're using the \"BLCK CNDL\" seed (the \"Total Curse Immunity\" Easter Egg) or using the Racing+ mod (which disables curses)", "floor_splits");
 }
 
 init
@@ -60,8 +60,8 @@ start
 
 reset
 {
-    //old.timer is 0 immediately during a reset, and also when you're on the main menu
-    //this "current.timer < 10" is to stop a reset from happening when you s+q.
+    // old.timer is 0 immediately during a reset, and also when you're on the main menu
+    // this "current.timer < 10" is to stop a reset from happening when you s+q.
     // (unless you s+q during the first 1/3 second of the run, but why would you)
     if (old.timer == 0 && current.timer != 0 && current.timer < 10
         && (!settings["character_run"] || timer.CurrentSplitIndex == 0))
@@ -79,16 +79,21 @@ reset
 split
 {
     if (current.wins == old.wins + 1)
+    {
         return true;
+    }
 
     if (settings["racing_plus_custom_challenge"] && current.cpCount == 1 && old.cpCount != 1)
+    {
         return true;
+    }
 
     if (settings["floor_splits"])
     {
         if (current.floor > old.floor && current.floor > 1 && old.floor > 0
-        && (!settings["grouped_floors"] || (current.floor != 2 && current.floor != 4 && current.floor != 6 && current.floor != 8))) {
-            //when using floor splits, if they just got into an xl floor, we are going to doublesplit
+        && (!settings["grouped_floors"] || (current.floor != 2 && current.floor != 4 && current.floor != 6 && current.floor != 8)))
+        {
+            // when using floor splits, if they just got into an xl floor, we are going to doublesplit
             vars.timer_during_floor_change = current.timer;
             return true;
         }
@@ -97,9 +102,10 @@ split
         && current.timer > vars.timer_during_floor_change)
         {
             vars.timer_during_floor_change = -1;
-            //if they're in blck_cndl mode, there is no xl even if the xl curse looks like it's on
-            //similarly, with grouped floors, there's no split to skip
-            if(current.curse == 2 && !settings["blck_cndl"] && !settings["grouped_floors"]) {
+            // if they're in blck_cndl mode, there is no xl even if the xl curse looks like it's on
+            // similarly, with grouped floors, there's no split to skip
+            if (current.curse == 2 && !settings["blck_cndl"] && !settings["grouped_floors"])
+            {
                 var model = new TimerModel { CurrentState = timer };
                 model.SkipSplit();
             }
