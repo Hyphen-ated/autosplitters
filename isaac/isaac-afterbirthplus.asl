@@ -2,23 +2,23 @@
 // Code by Hyphen-ated
 // Checkpoint code & pointer annotations by blcd/Zamiel
 
-state("isaac-ng", "1.06.J99")
+state("isaac-ng", "1.06.J104")
 {
-    // 0x004F8000 - GlobalsPtr
-    int wins:      0x004F8000, 0x760;
-    int character: 0x004F8000, 0x7a38;
-    int winstreak: 0x004F8000, 0x1f0;
+    // 0x00504FF0 - GlobalsPtr
+    int wins:      0x00504FF0, 0x760;
+    int character: 0x00504FF0, 0x7a38;
+    int winstreak: 0x00504FF0, 0x1f0;
 
-    // 0x004F7FF4 - GamePtr (which is the same thing as the Lua "game" pointer)
-    int timer:   0x004F7FF4, 0x00213b0c;
-    int floor:   0x004F7FF4, 0x0;
-    int curse:   0x004F7FF4, 0xC;
-    
+    // 0x00504FE4 - GamePtr (which is the same thing as the Lua "game" pointer)
+    int timer:   0x00504FE4, 0x00213b0c;
+    int floor:   0x00504FE4, 0x0;
+    int curse:   0x00504FE4, 0xC;
+
     // Checkpoint is a custom item planted at the end of a run in the Racing+ mod
-    int cpCount: 0x004F7FF4, 0x9b64, 0x0, 0x2764, 0x874; // "Checkpoint" (ID 541) count
+    int cpCount: 0x00504FE4, 0x9b64, 0x0, 0x2764, 0x874; // "Checkpoint" (ID 541) count
     
     // Off Limits is a custom item used by the Racing+ mod to signal the AutoSplitter that the mod is sending the player back to the first character        
-    int olCount: 0x004F7FF4, 0x9b64, 0x0, 0x2764, 0x86C; // "Off Limits" (ID 539) count
+    int olCount: 0x00504FE4, 0x9b64, 0x0, 0x2764, 0x86C; // "Off Limits" (ID 539) count
     
     // Equivalent Lua: Game():GetPlayer(0):GetCollectibleNum(541)
     // 0x9b64 - PlayerVectorPtr
