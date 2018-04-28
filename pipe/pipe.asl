@@ -10,9 +10,42 @@ state("ANOMONA", "1.1")
    int flag  : 0x3859A0;
 }
 
+init
+{
+    vars.currentRoomIdx = 0;
+    vars.screen1Vals = new List<int>();
+    vars.screen1Vals.Add(475136);
+    vars.screen1Vals.Add(475144);
+    vars.screen1Vals.Add(475152);
+    vars.screen1Vals.Add(475156);
+    vars.screen1Vals.Add(475136);
+    vars.screen1Vals.Add(475120);
+    vars.screen1Vals.Add(475136);
+    vars.screen1Vals.Add(475120);
+    vars.screen1Vals.Add(458752);
+    vars.screen1Vals.Add(458752);
+    vars.screen1Vals.Add(0);
+    
+    vars.screen2Vals = new List<int>();
+    
+    vars.screen2Vals.Add(475170);
+    vars.screen2Vals.Add(475168);
+    vars.screen2Vals.Add(475168);
+    vars.screen2Vals.Add(475164);
+    vars.screen2Vals.Add(475164);
+    vars.screen2Vals.Add(475164);
+    vars.screen2Vals.Add(475168);
+    vars.screen2Vals.Add(475164);
+    vars.screen2Vals.Add(475168);
+    vars.screen2Vals.Add(458752);
+    vars.screen2Vals.Add(0);
+    
+}
+
 startup
 {
-    settings.Add("split_screens", false, "Split on screen transitions (as well as key and hearts)");
+    settings.Add("split_pickups", true, "Split on the key and on hearts");
+    settings.Add("split_screens", false, "Split on the screen transitions in the any% route");
 }
 
 update
@@ -22,21 +55,35 @@ update
 
 start
 {
-    return (old.clock == 0 && current.clock != 0);
+    if (old.clock == 0 && current.clock != 0) {
+        vars.currentRoomIdx = 0;
+        return true;
+    }
 }
 
 reset 
 {
-    return (old.clock != 0 && current.clock == 0);
+    if (old.clock != 0 && current.clock == 0) {
+        vars.currentRoomIdx = 0;
+        return true;
+    }
 }
 
 split
 {
-    return (old.key != current.key 
-         || old.heart != current.heart 
-         || old.flag != current.flag
-         || (settings["split_screens"] && old.screen1 != current.screen1)
-         || (settings["split_screens"] && old.screen2 != current.screen2));
-    //if you don't want splits, just one segment for the whole game, then use this:
-    //return (old.flag != current.flag);
+    if(settings["split_screens"]
+       && current.screen1 == vars.screen1Vals[vars.currentRoomIdx + 1]
+       && current.screen2 == vars.screen2Vals[vars.currentRoomIdx + 1]) {
+       
+       ++vars.currentRoomIdx;
+       return true;
+       }
+
+    if(settings["split_pickups"] &&
+         (old.key != current.key 
+         || old.heart != current.heart)) {
+         return true;
+    }
+    
+    return (old.flag != current.flag);
 }
