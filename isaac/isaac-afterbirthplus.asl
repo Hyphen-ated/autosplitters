@@ -2,32 +2,42 @@
 // Code by Hyphen-ated
 // Checkpoint code & pointer annotations by blcd/Zamiel
 
-state("isaac-ng", "1.06.J127")
+state("isaac-ng", "1.06.J150")
 {
-    // 0x0050CFC0 - GlobalsPtr
-    int wins:      0x0050CFC0, 0x770;
-    int character: 0x0050CFC0, 0x7c74;
-    int winstreak: 0x0050CFC0, 0x1fc;
+    // 0x005380E0 old(0x0050CFC0) - GlobalsPtr
+    int wins:      0x0050CFC0, 0x80C;
+    int character: 0x0050CFC0, 0x76A0;
+    int winstreak: 0x0050CFC0, 0x230;
 
-    // 0x0050CFB4 - GamePtr (which is the same thing as the Lua "game" pointer)
-    int timer:   0x0050CFB4, 0x00213D44;
-    int floor:   0x0050CFB4, 0x0;
-    int curse:   0x0050CFB4, 0xC;
+
+    // 005380D0 - old(0x0050CFB4) - GamePtr (which is the same thing as the Lua "game" pointer)
+    int timer:   0x005380D0, 0x001F37C8;
+    int floor:   0x005380D0, 0x0;
+    int curse:   0x005380D0, 0xC;
 
     // Checkpoint is a custom item planted at the end of a run in the Racing+ mod
-    int cpCount: 0x0050CFB4, 0x9d8c, 0x0, 0x2764, 0x87C; // "Checkpoint" (ID 543) count
+    int cpCount: 0x005380D0, 0x9768, 0x0, 0x2770, 0x8C4; // "Checkpoint" (ID 561) count
 
     // Off Limits is a custom item used by the Racing+ mod to signal the AutoSplitter that the mod is sending the player back to the first character
-    int olCount: 0x0050CFB4, 0x9d8c, 0x0, 0x2764, 0x874; // "Off Limits" (ID 541) count
+    int olCount: 0x005380D0, 0x9768, 0x0, 0x2770, 0x8BC; // "Off Limits" (ID 559) count
 
+    // Pre BP5
     // Equivalent Lua: Game():GetPlayer(0):GetCollectibleNum(541)
     // 0x9d8c  - PlayerVectorPtr
     // 0x0    - Player1
     // 0x2764 - Player1 CollectibleNum Vector Ptr
     //# 0x864 - Item 537 count
     //# 0x86C - Item 539 count
-    // 0x874 - Item 541 count - current
-    // 0x87C - Item 543 count - current
+    // 0x874 - Item 541 count
+    // 0x87C - Item 543 count
+
+    // BP5
+    // Equivalent Lua: Game():GetPlayer(0):GetCollectibleNum(541)
+    // 0x94D8  - PlayerVectorPtr
+    // 0x0    - Player1
+    // 0x221C - Player1 CollectibleNum Vector Ptr
+    // 0x8BC - Item 559 count - current
+    // 0x8C4 - Item 561 count - current
 }
 
 startup
