@@ -23,15 +23,15 @@ update
 
 start
 {
-	return (current.gameTime > 0.05);
+    return (current.gameTime > 0.05);
 }
 
 reset
 {
     //if all these values are 1, that means the game is ending and we want to split rather than reset.
     //any other time, it's a reset because they went back to the main menu.
-	return !(old.dive == 1 && old.flip == 1 && old.dash == 1 && old.bowl == 1 && old.pound == 1 && old.blast == 1)
-           && current.gameTime < 0.05; 
+    return !(old.dive == 1 && old.flip == 1 && old.dash == 1 && old.bowl == 1 && old.pound == 1 && old.blast == 1)
+        && current.gameTime < 0.05; 
 }
 
 split
@@ -46,19 +46,19 @@ split
     
     //check for the end of the game
     if ((old.dive == 1 && old.flip == 1 && old.dash == 1 && old.bowl == 1 && old.pound == 1 && old.blast == 1)
-        && current.gameTime < 0.05) {
+    && current.gameTime < 0.05) {
         return true;
-        }
+    }
 }
 
 isLoading
 {
     //always true to force livesplit to constantly sync to IGT
-	return true;
+    return true;
 }
 
 gameTime
 {
     //use old instead of current because otherwise it will be 0 after the final split happens
-	return TimeSpan.FromSeconds(old.gameTime);
+    return TimeSpan.FromSeconds(old.gameTime);
 }
