@@ -16,10 +16,10 @@ state("isaac-ng", "1.06.J168")
     int curse:   0x0053A0D0, 0xC;
 
     // Checkpoint is a custom item planted at the end of a run in the Racing+ mod
-    int cpCount: 0x0053A0D0, 0x9768, 0x0, 0x2770, 0x8C0; // "Checkpoint" (ID 560) count
+    int cpCount: 0x0053A0D0, 0x9768, 0x0, 0x2770, 0x8C4; // "Checkpoint" (ID 561) count
 
     // Off Limits is a custom item used by the Racing+ mod to signal the AutoSplitter that the mod is sending the player back to the first character
-    int olCount: 0x0053A0D0, 0x9768, 0x0, 0x2770, 0x8B8; // "Off Limits" (ID 558) count
+    int olCount: 0x0053A0D0, 0x9768, 0x0, 0x2770, 0x8C0; // "Off Limits" (ID 560) count
 
     // Pre BP5
     // Equivalent Lua: Game():GetPlayer(0):GetCollectibleNum(541)
@@ -58,7 +58,7 @@ init
 update
 {
     //print("wins: " + current.wins + ", floor: " + current.floor + ", character: " + current.character + ", timer: " + current.timer + ", curse: " + current.curse);
-    //print("checkpointCount: " + current.checkpointCount);
+    //print("cpCount: " + current.cpCount);
 }
 
 start
